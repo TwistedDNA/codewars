@@ -1,1 +1,1 @@
-## Collection of codewars Kata, and my solutions to them
+## Collection of Codewars Kata, and my solutions to them
