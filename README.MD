@@ -1,0 +1,1 @@
+## Collection of codewars Kata, and my solutions to them
