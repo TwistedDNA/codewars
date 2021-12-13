@@ -1,4 +1,4 @@
-package active.learning.arrays;
+package active.learning.arrays.maximum.subarray;
 
 public class MaximumSubArraySum {
     public static int sequence(int[] arr) {

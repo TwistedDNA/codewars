@@ -1,7 +1,8 @@
-package active.learning.arrays;
+package active.learning.arrays.maximum.subarray;
 
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class MaximumSubArraySumTest {
