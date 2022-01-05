@@ -9,8 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ParseMoleculeTest {
 
@@ -32,19 +31,32 @@ public class ParseMoleculeTest {
                 "Fremy's salt");
     }
 
+    @Test
+    public void shouldThrowExceptionOnInvalidElement(){
+        String formula = "Ag2Li3Ub6";
+        assertThrows(IllegalArgumentException.class, () -> ParseMolecule.getAtoms(formula));
+    }
+
     public void testMolecule(List<String> atoms, List<Integer> nums, String formula, String name) {
         Map<String, Integer> expected = new HashMap<>();
         for (int i = 0; i < atoms.size(); i++) expected.put(atoms.get(i), nums.get(i));
 
         assertEquals(String.format("Should parse %s: %s", name, formula), expected, ParseMolecule.getAtoms(formula));
     }
+
     @Test
     public void lastAtomRegexTest_shouldFindLastAtom(){
         String legitFormula = "H2SO4";
         Matcher matcher = Pattern.compile(ParseMolecule.LAST_ATOM_REGEX).matcher(legitFormula);
-        // TODO test failing, fix regex
         assertTrue(matcher.find());
         assertEquals("O", matcher.group(1));
-        assertEquals("2", matcher.group(2));
+        assertEquals("4", matcher.group(2));
+    }
+
+    @Test
+    public void lastAtomRegexTest_shouldNotFindLastAtomIfInBrackets(){
+        String legitFormula = "Mg(OH)2";
+        boolean foundAtom = Pattern.compile(ParseMolecule.LAST_ATOM_REGEX).matcher(legitFormula).find();
+        assertFalse(foundAtom);
     }
 }
