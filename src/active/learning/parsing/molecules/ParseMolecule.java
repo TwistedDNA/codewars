@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public class ParseMolecule {
 
-    public static final String LAST_ATOM_REGEX = ".*([A-Z]+[a-z]?)([0-9]{0,2})$";
-    public static final String ROUND_BRACES_REGEX = "(.*?)\\({1}(.*)\\){1}([0-9]{0,2})$";
+    public static final String LAST_ATOM_REGEX = ".*([A-Z]+[a-z]?)([0-9]{0,4})$";
+    public static final String BRACKETS_REGEX = "(.*?)[\\[,\\{,\\(]{1}(.*)[\\),\\],\\}]{1}([0-9]{0,4})$";
 
     public static Map<String, Integer> getAtoms(String formula) {
         Map<String, Integer> atoms = new LinkedHashMap<>();
@@ -33,9 +33,7 @@ public class ParseMolecule {
                 });
             }
         } else {
-            // TODO add other braces regex
-            // TODO deduplicate code
-            Matcher roundBraces = Pattern.compile(ROUND_BRACES_REGEX).matcher(formula);
+            Matcher roundBraces = Pattern.compile(BRACKETS_REGEX).matcher(formula);
             if (roundBraces.find()) {
                 //recursively process expression inside braces
                 String multiplierAsString = roundBraces.group(3);
@@ -56,6 +54,7 @@ public class ParseMolecule {
         }
         return atoms;
     }
+
 
     private static boolean isValidElement(String element) {
         // TODO implement elements library
